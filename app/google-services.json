@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "962821242246",
+    "firebase_url": "https://pc-shop-26ebc-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "pc-shop-26ebc",
+    "storage_bucket": "pc-shop-26ebc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962821242246:android:f31dc2da9a461abd1e4007",
+        "android_client_info": {
+          "package_name": "com.example.pcshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962821242246-mspv7e4v8nj2829vnlufe4bufp94absq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOnE_ZRw8ix3a_4p8vLzs2Pp3Qi8TwGTc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "962821242246-mspv7e4v8nj2829vnlufe4bufp94absq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

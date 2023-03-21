@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/Show_details"
+    android:background="@color/white">
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+   <ImageView
+       android:layout_marginTop="30dp"
+       android:id="@+id/ItemImage"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       app:srcCompat="@drawable/game_icon_background"
+       android:layout_gravity="center"
+       tools:ignore="MissingConstraints"
+       android:outlineAmbientShadowColor="#E7E7E7"
+       />
+
+   <TextView
+       android:id="@+id/titleTxt"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="title"
+       android:layout_marginLeft="20dp"
+       android:layout_marginTop="50dp"
+       android:textAlignment="center"
+       android:textSize="28sp"
+       android:textStyle="bold"
+       android:textColor="@color/black"
+       ></TextView>
+
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal">
+   <TextView
+       android:id="@+id/brandTxt"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="brand"
+       android:layout_marginLeft="20dp"
+       android:textAlignment="center"
+       android:textSize="28sp"
+       android:textStyle="bold"
+       android:textColor="@color/black"
+       ></TextView>
+      <TextView
+          android:id="@+id/textView2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Cijena: $"
+          android:layout_marginLeft="50dp"
+          android:layout_marginRight="5dp"
+          android:textSize="28sp"
+          android:textStyle="bold"
+          android:textColor="@color/black"/>
+   <TextView
+       android:id="@+id/priceTxt"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="€"
+       android:textAlignment="center"
+       android:textSize="28sp"
+       android:textStyle="bold"
+       android:textColor="@color/black"
+       ></TextView>
+
+
+
+   </LinearLayout>
+
+   <TextView
+       android:layout_margin="15dp"
+       android:id="@+id/descriptionTxt"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Description"
+       android:textSize="28dp"
+       android:layout_marginTop="20dp"
+       tools:ignore="MissingConstraints"
+       android:textColor="@color/black"/>
+   <TextView
+       android:id="@+id/AddtoCart"
+       android:layout_width="match_parent"
+       android:layout_height="60dp"
+       android:background="@color/black"
+       android:drawableRight="@drawable/ic_baseline_shopping_cart_24"
+       android:gravity="center"
+       android:text="Dodaj u košaricu"
+       android:textAlignment="center"
+       android:textColor="@color/white"
+       android:textSize="35dp"
+       android:textStyle="bold"
+       android:layout_gravity="bottom"
+       android:layout_alignParentBottom="true"/>
+</LinearLayout>
+   </ScrollView>
+</RelativeLayout>

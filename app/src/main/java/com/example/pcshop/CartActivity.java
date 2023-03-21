@@ -1,0 +1,117 @@
+package com.example.pcshop;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.pcshop.adapter.MyCartAdapter;
+import com.example.pcshop.listener.ICartLoadListener;
+import com.example.pcshop.model.CartModel;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class CartActivity extends AppCompatActivity implements ICartLoadListener {
+    @BindView(R.id.recycler_cart)
+    RecyclerView recyclerCart;
+    @BindView(R.id.main_layout)
+    RelativeLayout mainLayout;
+    @BindView(R.id.txtTotal)
+    TextView txtTotal;
+    @BindView(R.id.checkOut)
+    TextView checkOut;
+
+    ICartLoadListener cartLoadListener;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_cart);
+
+        init();
+        loadCartFromFirebase();
+
+
+    }
+
+    private void loadCartFromFirebase() {
+        List<CartModel> cartModels = new ArrayList<>();
+        FirebaseDatabase.getInstance()
+                .getReference("Cart")
+                .child("UNIQUE_USER_ID")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            for (DataSnapshot cartSnapshot:snapshot.getChildren())
+                            {
+                                CartModel cartModel = cartSnapshot.getValue(CartModel.class);
+                                cartModel.setKey(cartSnapshot.getKey());
+                                cartModels.add(cartModel);
+                            }
+                            cartLoadListener.onCartLoadSuccess(cartModels);
+                        }
+                        else
+                            cartLoadListener.onCartLoadFailed("Košarica prazna");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        cartLoadListener.onCartLoadFailed(error.getMessage());
+                    }
+                });
+    }
+
+    private void init(){
+        ButterKnife.bind(this);
+        cartLoadListener = this;
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerCart.setLayoutManager(layoutManager);
+        recyclerCart.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
+        checkOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseDatabase.getInstance()
+                        .getReference("Cart")
+                        .child("UNIQUE_USER_ID").removeValue();
+                Intent Intent = new Intent(CartActivity.this, Checkout.class);
+                startActivity(Intent);
+            }
+        });
+    }
+
+    @Override
+    public void onCartLoadSuccess(List<CartModel> cartModelList) {
+        double sum = 0;
+        for(CartModel cartModel : cartModelList)
+        {
+            sum+= cartModel.getTotalPrice();
+        }
+        txtTotal.setText(new StringBuilder("$").append(sum));
+        MyCartAdapter adapter = new MyCartAdapter(this, cartModelList);
+        recyclerCart.setAdapter(adapter);
+    }
+
+    @Override
+    public void onCartLoadFailed(String message) {
+        Snackbar.make(mainLayout,message, BaseTransientBottomBar.LENGTH_LONG).show();
+    }
+
+}
